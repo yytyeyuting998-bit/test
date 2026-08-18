@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>好习惯养宠物</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(160deg, #0a0520 0%, #150828 30%, #0a0215 60%, #020005 100%);
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 16px 40px;
+            gap: 12px;
+        }
+
+        /* ===== 标题区 ===== */
+        .title-section {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .title-main {
+            font-size: clamp(28px, 7vw, 40px);
+            font-weight: 900;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 30%, #e879f9 60%, #818cf8 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 4px;
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.2);
+            animation: titlePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.15); }
+        }
+
+        .title-sub {
+            font-size: clamp(12px, 3vw, 15px);
+            color: rgba(251, 191, 36, 0.45);
+            letter-spacing: 6px;
+            margin-top: 4px;
+        }
+
+        .title-divider {
+            width: 120px;
+            height: 2px;
+            margin: 12px auto 0;
+            background: linear-gradient(90deg, transparent, #fbbf24, #e879f9, transparent);
+            opacity: 0.5;
+        }
+
+        /* ===== 宠物网格 ===== */
+        .pet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            margin: 8px 0;
+        }
+
+        .pet-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 16px;
+            padding: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pet-card:active {
+            transform: scale(0.97);
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        .pet-card object {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            display: block;
+            pointer-events: none;
+        }
+
+        .pet-label {
+            font-size: clamp(11px, 2.5vw, 14px);
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 4px 0 8px;
+            text-align: center;
+        }
+
+        .pet-card:nth-child(1) .pet-label { color: #a5f3fc; }   /* Lv.1 蓝 */
+        .pet-card:nth-child(2) .pet-label { color: #c084fc; }   /* Lv.2 紫 */
+        .pet-card:nth-child(3) .pet-label { color: #e879f9; }   /* Lv.3 粉 */
+        .pet-card:nth-child(4) .pet-label { color: #f59e0b; }   /* Lv.4 金 */
+        .pet-card:nth-child(5) .pet-label { color: #fbbf24; }   /* Lv.5 星辉 */
+        .pet-card:nth-child(6) .pet-label { color: #fef08a; }   /* Lv.6 传说 */
+
+        /* 卡片边框颜色 */
+        .pet-card:nth-child(1) { border-color: rgba(165, 243, 252, 0.15); }
+        .pet-card:nth-child(2) { border-color: rgba(192, 132, 252, 0.15); }
+        .pet-card:nth-child(3) { border-color: rgba(232, 121, 249, 0.15); }
+        .pet-card:nth-child(4) { border-color: rgba(245, 158, 11, 0.15); }
+        .pet-card:nth-child(5) { border-color: rgba(251, 191, 36, 0.18); }
+        .pet-card:nth-child(6) { border-color: rgba(254, 240, 138, 0.2); }
+
+        /* ===== 等级标签 ===== */
+        .level-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 8px;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+        .pet-card:nth-child(1) .level-badge {
+            color: #a5f3fc;
+            border: 1px solid rgba(165, 243, 252, 0.25);
+        }
+        .pet-card:nth-child(2) .level-badge {
+            color: #c084fc;
+            border: 1px solid rgba(192, 132, 252, 0.25);
+        }
+        .pet-card:nth-child(3) .level-badge {
+            color: #e879f9;
+            border: 1px solid rgba(232, 121, 249, 0.25);
+        }
+        .pet-card:nth-child(4) .level-badge {
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+        .pet-card:nth-child(5) .level-badge {
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        .pet-card:nth-child(6) .level-badge {
+            color: #fef08a;
+            border: 1px solid rgba(254, 240, 138, 0.3);
+        }
+
+        /* ===== 按钮 ===== */
+        .btn-area {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-start {
+            width: 100%;
+            max-width: 320px;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: clamp(18px, 4.5vw, 22px);
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #fff;
+            background: linear-gradient(135deg, #f59e0b, #d946ef, #6366f1);
+            background-size: 200% 200%;
+            animation: gradientMove 4s ease infinite, btnPulse 2.5s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 0 30px rgba(217, 70, 239, 0.25), 0 0 60px rgba(251, 191, 36, 0.1);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .btn-start::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .btn-start:active {
+            transform: scale(0.96);
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(217, 70, 239, 0.25), 0 0 60px rgba(251, 191, 36, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(217, 70, 239, 0.4), 0 0 80px rgba(251, 191, 36, 0.2); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(25deg); }
+            100% { transform: translateX(200%) rotate(25deg); }
+        }
+
+        .btn-hint {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 2px;
+        }
+
+        /* ===== 底部装饰星星 ===== */
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .container, .title-section, .pet-grid, .btn-area {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (min-width: 600px) {
+            .container { max-width: 560px; padding: 40px 24px; }
+            .pet-grid { gap: 14px; }
+            .pet-card { padding: 10px; border-radius: 20px; }
+        }
+
+        @media (min-width: 900px) {
+            .container { max-width: 700px; }
+            .pet-grid { grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        }
+
+        @media (max-width: 360px) {
+            .pet-grid { gap: 6px; }
+            .pet-card { padding: 4px; border-radius: 12px; }
+            .container { padding: 20px 10px 30px; gap: 8px; }
+        }
+
+        /* ===== 加载容错 ===== */
+        .pet-card .fallback {
+            display: none;
+            aspect-ratio: 4 / 5;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+        object[data]:not([data^="data"]) + .fallback { display: none; }
+    </style>
+</head>
+<body>
+
+<!-- 背景星星 -->
+<div class="stars-bg" id="stars"></div>
+
+<div class="container">
+    <!-- 标题 -->
+    <div class="title-section">
+        <div class="title-main">好习惯养宠物</div>
+        <div class="title-sub">✦ 培育你的专属水母 ✦</div>
+        <div class="title-divider"></div>
+    </div>
+
+    <!-- 宠物网格 -->
+    <div class="pet-grid">
+        <div class="pet-card">
+            <span class="level-badge">Lv.1</span>
+            <object data="pet_lv1.svg" type="image/svg+xml" aria-label="Lv.1 梦幻小水母">Lv.1</object>
+            <div class="pet-label">梦幻小水母</div>
+        </div>
+        <div class="pet-card">
+            <span class="level-badge">Lv.2</span>
+            <object data="pet_lv2.svg" type="image/svg+xml" aria-label="Lv.2 星光幼芽体">Lv.2</object>
+            <div class="pet-label">星光幼芽体</div>
+        </div>
+        <div class="pet-card">
+            <span class="level-badge">Lv.3</span>
+            <object data="pet_lv3.svg" type="image/svg+xml" aria-label="Lv.3 幻光成长体">Lv.3</object>
+            <div class="pet-label">幻光成长体</div>
+        </div>
+        <div class="pet-card">
+            <span class="level-badge">Lv.4</span>
+            <object data="pet_lv4.svg" type="image/svg+xml" aria-label="Lv.4 闪耀形态">Lv.4</object>
+            <div class="pet-label">闪耀形态</div>
+        </div>
+        <div class="pet-card">
+            <span class="level-badge">Lv.5</span>
+            <object data="pet_lv5.svg" type="image/svg+xml" aria-label="Lv.5 星辉完全体">Lv.5</object>
+            <div class="pet-label">星辉完全体</div>
+        </div>
+        <div class="pet-card">
+            <span class="level-badge">Lv.6</span>
+            <object data="pet_lv6.svg" type="image/svg+xml" aria-label="Lv.6 传说终极形态">Lv.6</object>
+            <div class="pet-label">传说终极形态</div>
+        </div>
+    </div>
+
+    <!-- 按钮区 -->
+    <div class="btn-area">
+        <button class="btn-start" id="btnStart">✦ 开启宠物 ✦</button>
+        <div class="btn-hint">选择一个起点，开始你的养成之旅</div>
+    </div>
+</div>
+
+<script>
+    // 动态生成背景星星
+    (function() {
+        const container = document.getElementById('stars');
+        const count = 60;
+        for (let i = 0; i < count; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            const size = 1 + Math.random() * 2.5;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.animation = `starTwinkle ${2 + Math.random() * 3}s ease-in-out ${Math.random() * 5}s infinite`;
+            star.style.opacity = 0.15 + Math.random() * 0.35;
+            container.appendChild(star);
+        }
+    })();
+
+    // 添加星星闪烁 keyframe
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.3); }
+        }
+    `;
+    document.head.appendChild(styleSheet);
+
+    // 按钮点击事件 — 跳转至游戏界面
+    document.getElementById('btnStart').addEventListener('click', function() {
+        this.textContent = '✦ 正在孵化... ✦';
+        this.disabled = true;
+        setTimeout(() => {
+            window.location.href = 'game.html';
+        }, 500);
+    });
+
+    // SVG 加载失败回退
+    document.querySelectorAll('.pet-card object').forEach(obj => {
+        obj.addEventListener('error', function() {
+            this.style.display = 'none';
+            const fallback = document.createElement('div');
+            fallback.className = 'fallback';
+            fallback.style.display = 'flex';
+            fallback.textContent = '✦';
+            this.parentNode.insertBefore(fallback, this.nextSibling);
+        });
+    });
+</script>
+
+</body>
+</html>
